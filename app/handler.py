@@ -17,11 +17,24 @@ class Handler:
         super().__init__()
     
 
+    # def postDataRequest(self, req):
+    #     pref = req.pref
+    #     df = pd.DataFrame()
+    #     if pref == 'csv':
+    #         data = requests.get(req.url)
+    #         #convert data to a df
+    #     elif pref == 'twitter':
+    #         twitData = TwitData()
+    #         df = twitData.fetchData()
+
+    #     return self.cleanRequest(df)    
+
+
 
     '''Handler function for clean data request
         @params: url of the csv file
         @returns: dictionary of top words by count, to be used in EDA'''
-    def cleanRequest(self, url):
+    def cleanRequest(self, df):
         #req = requests.get(url)
         df = pd.read_csv(REV_DATA_FILE)
         cleaner = Cleaner()
