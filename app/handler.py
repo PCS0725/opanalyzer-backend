@@ -1,3 +1,5 @@
+from gensim.models import word2vec
+from app.classifiers.lrClassifier import LrClassifier
 from app.result import Result
 import pandas as pd
 import requests
@@ -6,8 +8,11 @@ from flask import jsonify
 from app.cleaner import Cleaner
 from app.config import *
 from app.embeddings.ngrams import Ngrams
+from app.embeddings.word2vecs import Word2Vecs
 from app.classifiers.nbClassifier import NbClassifier
 from app.classifiers.rbClassifier import RbClassifier
+from app.classifiers.lrClassifier import LrClassifier
+
 from app.result import Result
 
 '''Handler class for all the requests
@@ -28,7 +33,6 @@ class Handler:
     #         df = twitData.fetchData()
 
     #     return self.cleanRequest(df)    
-
 
 
     '''Handler function for clean data request
@@ -57,7 +61,8 @@ class Handler:
             ngram = Ngrams()
             df_embeddings = ngram.getEmbeddings(df)
         elif embedding_algo == 'w2vec':
-            pass             
+            word2vecs = Word2Vecs()
+            df_embeddings = word2vecs.getEmbeddings(df)             
 
         if classifier == 'nb':
             nbClassifier = NbClassifier()
@@ -65,6 +70,9 @@ class Handler:
         elif classifier == 'rb':
             rbClassifier = RbClassifier()
             y_pred = rbClassifier.classify(df)
+        elif classifier == 'lr':
+            lrClassifier = LrClassifier()
+            y_pred = lrClassifier.classify(df_embeddings)
 
         df['class'] = y_pred
         result = Result()

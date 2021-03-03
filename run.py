@@ -20,14 +20,15 @@ def classifyData():
         'feature': 'ngrams',
         'classifier': 'rb'
     }
-    try:
-        res = handler.classifyRequest(choices)
-        return res, 201
-    except:
-        res = {
-            'message' : 'Some error'
-        }
-        return res, 500
+    # try:
+    #     res = handler.classifyRequest(choices)
+    #     return res, 201
+    # except:
+    #     res = {
+    #         'message' : 'Some error'
+    #     }
+    #     return res, 500
+    return handler.classifyRequest(choices)
     #return handler.cleanRequest('hehe')
 
 

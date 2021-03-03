@@ -1,12 +1,13 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
 import pickle
+import pandas as pd
 
 from app.config import *
 
-class NbClassifier:
+
+class LrClassifier:
 
     def scaleData(self, df):
         df.fillna(0, inplace = True)
@@ -29,14 +30,14 @@ class NbClassifier:
         #training and predicting will be different scenarios, take care
         #x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=5)
 
-        #model = MultinomialNB()
+        #model = LogisticRegression(random_state=0, multi_class = 'multinomial', max_iter = 500)
         #model.fit(x_train, y_train)
 
-        #padding extra columns to match with the trained model
         for i in range(0, 2116 - x.shape[1]):
             x[str(i)] = pd.Series([0 for x in range(len(df.index))], index=x.index)
 
-        model = pickle.load(open(NB_MODEL, 'rb'))
+        model = pickle.load(open(LR_MODEL, 'rb'))
+
         y_pred = model.predict(x)
         
         return y_pred

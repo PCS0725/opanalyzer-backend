@@ -1,5 +1,6 @@
 .vscode
 app/data/*
+app/models/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
