@@ -57,14 +57,24 @@ class Result:
         countNeg = Counter(strNeg)
         countNeut = Counter(strNeut)
 
+        top_pos = countPos.most_common(50)
+        top_neg = countNeg.most_common(50)
+        top_neut = countNeut.most_common(50)
+
+        neg1 = [i for i in top_neg if i not in top_pos]
+        neg_only = [i for i in neg1 if i not in top_neut]
+
+        neut1 = [i for i in top_neut if i not in top_pos]
+        neut_only = [i for i in neut1 if i not in top_neg]
+
         insights = {
             'total': tot,
             'total_pos': totPos,
             'total_neg': totNeg,
             'total_neut': totNeut,
-            'top_pos': countPos.most_common(10),
-            'tot_neg': countNeg.most_common(10),
-            'tot_neut': countNeut.most_common(10) 
+            'top_pos': top_pos,
+            'top_neg': neg_only,
+            'top_neut': neut_only 
         }
         
         return insights

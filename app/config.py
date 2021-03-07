@@ -1,3 +1,8 @@
+#SERVER
+PORT = 8080
+
+
+
 #EDA
 MAX_TOP_WORDS = 20
 

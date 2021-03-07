@@ -6,20 +6,21 @@ from app.handler import Handler
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+handler = Handler()
+
 
 @app.route('/', methods = ['GET'])
 def getHome():
     return '<h1>Hehe</h1>'
 
 
-@app.route('/classify', methods = ['GET'])
+@app.route('/classify', methods = ['POST'])
 def classifyData():
-    #declare a global var
-    handler = Handler()
-    choices = {
-        'feature': 'ngrams',
-        'classifier': 'rb'
-    }
+    choices = request.get_json(force = True)
+    # choices = {
+    #     'feature': 'ngrams',
+    #     'classifier': 'rb'
+    # }
     # try:
     #     res = handler.classifyRequest(choices)
     #     return res, 201
@@ -34,14 +35,14 @@ def classifyData():
 
 #work on this: 1mar 2021.
 @app.route('/data', methods = ['POST'])
-def postData(req, res):
-    handler = Handler()
-    msg = handler.postDataRequest(req)
-    response = {
-        'message': msg
-    }
+def postData():
+    choices = request.get_json(force = True)
+    msg = handler.postDataRequest(choices)
+    # response = {
+    #     'message': msg
+    # }
     
-    return response, 201
+    return msg, 201
 
 
 
